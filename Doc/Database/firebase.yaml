@@ -1,0 +1,54 @@
+
+How To Connect FireBase?:
+  ''
+
+Android:
+  1.
+    Find the package name in ./android/app/main/AndroidManifest.xml file.
+  
+  2.
+    Login FireBase website.
+    Create an Project.
+    Go in the setting page.
+    Click the add apply button.
+    Input package name, Download google-services.json.
+    Put the json file into ./android/app Folder.
+  
+  3.
+    Change ./android/build.gradle.
+    Do as the console.firebase.google.com's document do!!!
+
+    Change ./android/app/build.gradle.
+    Do as the console.firebase.google.com's document do!!!
+
+  4.
+    refresh flutter project.
+
+iOS:
+  1.
+    Use the same package name as android
+
+  2.
+    Download GoogleService-Info.plist.
+    Put plist file into the ./ios/Runner Folder.
+
+  3.
+    Ignore the rest of the steps.
+    click 'Next Step' button.
+
+  4.
+    refresh flutter project.
+
+Other:
+  if you have any questions, see that document: https://firebase.google.cn/docs/flutter/setup?hl=zh-cn#add_flutterfire_plugins
+
+Connect: https://pub.flutter-io.cn/packages/cloud_firestore
+  1.
+    add this to dependencies in you pubspec.yaml file.
+
+      firebase_analytics: ^5.0.6
+      firebase_auth: ^0.15.1+1
+      cloud_firestore: ^0.13.0+1
+      
+And Then, You should see that document: https://codelabs.developers.google.com/codelabs/flutter-firebase/index.html
+    
