@@ -1,4 +1,4 @@
-<center><img width = '270' src ="https://github.com/VcrTing/Flutting/blob/master/image.jpg?raw=true"/></center>
+<center><img src ="https://github.com/VcrTing/Flutting/blob/master/image.jpg?raw=true"/></center>
   
 ## Flutter Study Project
 version = 0.0.1
