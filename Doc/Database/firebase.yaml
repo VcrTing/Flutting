@@ -4,7 +4,9 @@ How To Connect FireBase?:
 
 Android:
   1.
-    Find the package name in ./android/app/main/AndroidManifest.xml file.
+    Find the packageName or AppId in ./android/app/build.gradle file.
+    App NickName is you project name.
+    Signing is needn't now. 
   
   2.
     Login FireBase website.
@@ -26,15 +28,16 @@ Android:
 
 iOS:
   1.
-    Use the same package name as android
+    Use the same packageName as android
+    or find the PRODUCT_BUNDLE_IDENTIFIER in ./ios/Runner.xcodeproj/project.pbxproj
 
   2.
     Download GoogleService-Info.plist.
     Put plist file into the ./ios/Runner Folder.
 
   3.
-    Ignore the rest of the steps.
-    click 'Next Step' button.
+    Then, cd to the ./ios folder.
+    Do as the console.firebase.google.com's document do!!!
 
   4.
     refresh flutter project.
