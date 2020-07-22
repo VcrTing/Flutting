@@ -55,3 +55,6 @@ Connect: https://pub.flutter-io.cn/packages/cloud_firestore
       
 And Then, You should see that document: https://codelabs.developers.google.com/codelabs/flutter-firebase/index.html
     
+Problem:
+  [!] CocoaPods did not set the base configuration: https://blog.csdn.net/deft_mkjing/article/details/51867346
+  [!] Automatically assigning platform `iOS` with version `8.0`: Add "platform :ios, '8.0'" in ./ios/Podfile file.
