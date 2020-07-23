@@ -13,9 +13,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Home Page'),
+      /*
       routes: <String, WidgetBuilder>{
         // '/a': (BuildContext context) => new MyPage(title: 'A 页面'),
       },
+      */
     );
   }
 }
