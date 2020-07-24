@@ -1,31 +1,29 @@
-import 'package:brew_crew/service/auth.dart';
-import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:brew_crew/service/auth.dart';
 import 'package:brew_crew/shared/constants.dart';
 import 'package:brew_crew/shared/loading.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
 
-  SignIn({Key key, this.toggleView}) : super(key: key);
+  Register({Key key, this.toggleView}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  //
+  // 字段
   String email = '';
   String pass = '';
   String error = '';
 
   Widget loginForm() {
     return Form(
-      key: _formKey,
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -43,9 +41,9 @@ class _SignInState extends State<SignIn> {
           ),
           TextFormField(
             decoration: textInputDecoration.copyWith(hintText: 'Password'),
-            obscureText: true,
             validator: (val) =>
                 val.length < 6 ? 'Enter a password 6+ chars long' : null,
+            obscureText: true,
             onChanged: (val) {
               setState(() => pass = val);
             },
@@ -56,23 +54,27 @@ class _SignInState extends State<SignIn> {
           RaisedButton(
             color: Colors.pink[400],
             child: Text(
-              'Sign In',
+              'Sign Up',
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 setState(() => loading = true);
                 dynamic result =
-                    await _auth.signInWithEmailAndPassword(email, pass);
+                    await _auth.registerWithEmailAndPassword(email, pass);
                 if (result == null) {
                   setState(() {
-                    error = 'Could not sign in with those credentials';
+                    error = 'please supply a valid email';
                     loading = false;
                   });
                 }
               }
             },
-          )
+          ),
+          SizedBox(
+            height: 12.0,
+          ),
+          Text(error, style: TextStyle(color: Colors.red, fontSize: 14.0)),
         ],
       ),
     );
@@ -87,14 +89,14 @@ class _SignInState extends State<SignIn> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: Text('Sign in to Brew Crew'),
+              title: Text('Sign up to Brew Crew'),
               actions: <Widget>[
                 FlatButton.icon(
                     onPressed: () {
                       widget.toggleView();
                     },
                     icon: Icon(Icons.person),
-                    label: Text('Register'))
+                    label: Text('Sign In'))
               ],
             ),
             body: Container(
