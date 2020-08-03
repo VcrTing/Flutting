@@ -24,6 +24,7 @@ class _RegisterState extends State<Register> {
 
   Widget loginForm() {
     return Form(
+      key: _formKey,
       child: Column(
         children: <Widget>[
           SizedBox(
