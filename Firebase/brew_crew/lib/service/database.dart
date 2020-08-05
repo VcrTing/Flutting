@@ -24,16 +24,16 @@ class DatabaseService {
         sugars: doc.data['sugars'] ?? '0',
         strength: doc.data['strength'] ?? 0,
       );
-    });
+    }).toList();
   }
 
   // Brew list from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot doc) {
     return UserData(
         uid: uid,
-        name: doc.data['name'] ?? '',
-        sugars: doc.data['sugars'] ?? '0',
-        strength: doc.data['strength'] ?? 0);
+        name: doc.data['name'],
+        sugars: doc.data['sugars'],
+        strength: doc.data['strength']);
   }
 
   // Get brews stream

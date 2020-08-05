@@ -1,5 +1,8 @@
 import '../widget/gestureDetector.dart';
 import 'package:flutter/material.dart';
+import 'package:study/util/space.dart';
+
+import './gestureDetector.dart';
 
 class WidgetView extends StatefulWidget {
   WidgetView({Key key}) : super(key: key);
@@ -13,26 +16,29 @@ class _WidgetViewState extends State<WidgetView> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[
-          Text('Widget 列表:'),
-          ListView(
-            children: buildList(),
-          )
-        ],
+        children: <Widget>[Text('Widget 列表:'), EMPTY(30), everyWidget()],
       ),
     );
   }
 
-  List<Widget> buildList() {
-    return [
-      ListTile(
-        leading: Icon(Icons.access_time),
-        title: Text('GestureDetector'),
-        onTap: () {
-          print('跳转到 GestureDetector。');
-        },
-      )
-    ];
+  Widget everyWidget() {
+    return Container(
+        child: ListTile(
+      leading: Icon(
+        Icons.person_outline,
+        size: 50.0,
+      ),
+      title: Text('gestureDetector'),
+      subtitle: Text('检测“单击”、“双击”、“长按”。'),
+      trailing: Icon(Icons.keyboard_arrow_right),
+      onTap: () {
+        print('aaaaa');
+
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return WidgetGestureDetector();
+        }));
+      },
+    ));
   }
 }
 

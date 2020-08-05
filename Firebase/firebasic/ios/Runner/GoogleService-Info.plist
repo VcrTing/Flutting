@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:834150523273:ios:3585efa0dd463b8ea18158</string>
+	<string>1:834150523273:ios:351ba3f6a01204bfa18158</string>
 	<key>DATABASE_URL</key>
 	<string>https://vcrting-first.firebaseio.com</string>
 </dict>

@@ -8,7 +8,43 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:834150523273:android:d6b017647452ebb0a18158",
+        "mobilesdk_app_id": "1:834150523273:android:e0840150d8b7f664a18158",
+        "android_client_info": {
+          "package_name": "com.example.brew_crew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834150523273-2dssf622a2n6kvd8h59n0nqshe382tac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe-B6hzA4kg5Jb2ojM9i-WcibywyCbgSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834150523273-2dssf622a2n6kvd8h59n0nqshe382tac.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "834150523273-pl9chsm7a94d8s0upujsrv2vq6d7m2vk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mycoffe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834150523273:android:a5117574fc9d4eeca18158",
         "android_client_info": {
           "package_name": "com.example.firebasic"
         }
@@ -32,10 +68,46 @@
               "client_type": 3
             },
             {
-              "client_id": "834150523273-o3laq5citgetap51m7q3622849f1hckb.apps.googleusercontent.com",
+              "client_id": "834150523273-pl9chsm7a94d8s0upujsrv2vq6d7m2vk.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.firebase"
+                "bundle_id": "com.example.mycoffe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834150523273:android:6a04f030616d3223a18158",
+        "android_client_info": {
+          "package_name": "com.example.mycoffe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834150523273-2dssf622a2n6kvd8h59n0nqshe382tac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe-B6hzA4kg5Jb2ojM9i-WcibywyCbgSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834150523273-2dssf622a2n6kvd8h59n0nqshe382tac.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "834150523273-pl9chsm7a94d8s0upujsrv2vq6d7m2vk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mycoffe"
               }
             }
           ]

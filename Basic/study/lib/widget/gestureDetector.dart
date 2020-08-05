@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study/util/space.dart';
 
 Widget widget_gestureDetector() {
   /*
@@ -15,16 +16,46 @@ Widget widget_gestureDetector() {
   */
   return GestureDetector(
     onTap: () {
-      print('GestureDetector be Tap!!!');
+      print('Classic Tap!!!');
+    },
+    onLongPress: () {
+      print('Classic LongPress!!!');
+    },
+    onDoubleTap: () {
+      print('Classic DoublePress!!!');
     },
     child: Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(20.0),
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Colors.lightGreen[500]),
       child: Center(
-        child: Text('Engage'),
+        child: Text('长按，单击，双击 动作检测！'),
+      ),
+    ),
+  );
+}
+
+Widget child_gestureDetector() {
+  return GestureDetector(
+    onTap: () {
+      print('Outter ONTAP');
+    },
+    child: Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.0),
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.lightGreen[500]),
+      child: AbsorbPointer(
+        child: RaisedButton(
+          child: Text('子组件'),
+          onPressed: () {
+            print('子组件被点击～');
+          },
+        ),
       ),
     ),
   );
@@ -47,7 +78,14 @@ class WidgetGestureDetector extends StatelessWidget {
 
   Widget content() {
     return Column(
-      children: <Widget>[widget_gestureDetector()],
+      children: <Widget>[
+        EMPTY(30),
+        Text('经典：'),
+        widget_gestureDetector(),
+        EMPTY(30),
+        Text('阻隔子组件点击：'),
+        child_gestureDetector()
+      ],
     );
   }
 }

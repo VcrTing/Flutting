@@ -1,3 +1,10 @@
 Mac:
 
 The emulator process for AVD Pixel was killed: 磁盘没内存了！！！
+
+Used:
+  Pixel
+  apple_ios_simulator
+
+开启:
+  flutter emulators --launch Pixel

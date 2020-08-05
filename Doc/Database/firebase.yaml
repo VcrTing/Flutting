@@ -24,6 +24,7 @@ Android:
     Do as the console.firebase.google.com's document do!!!
 
   4.
+    Change ./android/app/build.gradle Line 43 minSdkVersion to 21.
     refresh flutter project.
 
 iOS:
