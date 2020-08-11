@@ -1,12 +1,14 @@
 import 'package:firebasic/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './tab/contact.dart';
 import './tab/shop.dart';
+import './tab/imager.dart';
 
-final tabCount = 2;
-List<Widget> tabContent = [Contact(), Shop()];
-List<Widget> tabText = [Tab(text: '联络'), Tab(text: '商店')];
+final tabCount = 3;
+List<Widget> tabContent = [Contact(), ImagerPicker(), Shop()];
+List<Widget> tabText = [Tab(text: '联络'), Tab(text: '文件'), Tab(text: '商店')];
 
 class TabBarControllerPage extends StatefulWidget {
   TabBarControllerPage({Key key}) : super(key: key);
@@ -42,6 +44,8 @@ class _TabBarControllerPageState extends State<TabBarControllerPage>
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
@@ -57,6 +61,7 @@ class _TabBarControllerPageState extends State<TabBarControllerPage>
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
+                userApi = UserModel();
                 await userApi.signOut();
               },
             ),

@@ -26,6 +26,7 @@ class _FormViewState extends State<FormView> {
   // 收集的数据
   String _currentName;
   int _currentAge;
+  String _currentEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -42,47 +43,77 @@ class _FormViewState extends State<FormView> {
             SizedBox(
               height: 20.0,
             ),
-            TextFormField(
-              initialValue: '',
-              decoration: textInputDecoration,
-              validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-              onChanged: (val) => setState(() => _currentName = val),
-            ),
+            nameInput(),
             SizedBox(
               height: 20,
             ),
-            DropdownButtonFormField(
-                decoration: textInputDecoration,
-                value: _currentAge,
-                items: ages.map((age) {
-                  return DropdownMenuItem(
-                    value: age['val'],
-                    child: Text('${age['name']} 后'),
-                  );
-                }).toList(),
-                onChanged: (val) => setState(() => _currentAge = val)),
+            ageInput(),
             SizedBox(
               height: 20,
             ),
-            RaisedButton(
-              color: Colors.pink[400],
-              padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
-              child: Text(
-                '提交',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () async {
-                print(_currentName);
-                print(_currentAge);
-                if (_formKey.currentState.validate()) {
-                  // 执行上传
-                  await UserModel(uid: user.uid)
-                      .submitContact(_currentName, _currentAge);
-                }
-              },
-            )
+            emailInput(),
+            SizedBox(
+              height: 20,
+            ),
+            submitButton(user.uid)
           ],
         ));
+  }
+
+  // 提交按钮
+  Widget submitButton(String uid) {
+    return RaisedButton(
+      color: Colors.pink[400],
+      padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
+      child: Text(
+        '提交',
+        style: TextStyle(color: Colors.white),
+      ),
+      onPressed: () async {
+        print(_currentName);
+        print(_currentAge);
+        print(_currentEmail);
+        if (_formKey.currentState.validate()) {
+          // 执行上传
+          await UserModel(uid: uid)
+              .submitContact(_currentName, _currentAge, _currentEmail);
+        }
+      },
+    );
+  }
+
+  // 名字框
+  Widget nameInput() {
+    return TextFormField(
+      initialValue: '',
+      decoration: textInputDecoration,
+      validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+      onChanged: (val) => setState(() => _currentEmail = val),
+    );
+  }
+
+  // 年龄框
+  Widget ageInput() {
+    return DropdownButtonFormField(
+        decoration: textInputDecoration,
+        value: _currentAge,
+        items: ages.map((age) {
+          return DropdownMenuItem(
+            value: age['val'],
+            child: Text('${age['name']} 后'),
+          );
+        }).toList(),
+        onChanged: (val) => setState(() => _currentAge = val));
+  }
+
+  // 电邮框
+  Widget emailInput() {
+    return TextFormField(
+      initialValue: '',
+      decoration: textInputDecoration,
+      validator: (val) => val.isEmpty ? 'Please enter a email' : null,
+      onChanged: (val) => setState(() => _currentName = val),
+    );
   }
 }
 

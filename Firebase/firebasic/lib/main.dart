@@ -3,7 +3,12 @@ import 'package:provider/provider.dart';
 
 import './tabs.dart';
 import 'package:firebasic/model/user.dart';
-import 'package:firebasic/page/login.dart';
+import 'package:firebasic/page/auth/auth.dart';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,10 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     print(widget.title);
     final user = Provider.of<User>(context);
-    if (user != null) {
-      return TabBarControllerPage();
+
+    if (user == null) {
+      return Auth();
     } else {
-      return Login();
+      return TabBarControllerPage();
     }
   }
 }
