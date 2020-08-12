@@ -1,0 +1,28 @@
+Android SetUp:
+  1.
+    Add this line to AndroidManifest.xml, but under the <application> Tag
+
+    <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+        </intent-filter>
+    </receiver>
+    <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+  
+  2. 
+    Add this line to AndroidManifest.xml, but under the <manifest> Tag
+
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+  2.
+    如果是发布的 App，还需要做一些事情，详情查看：https://pub.flutter-io.cn/packages/flutter_local_notifications
+
+iOS SetUp:
+  1.
+    Add this line to AppDelegate.swift, but under the Bool {
+      if #available(iOS 10.0, *) {
+        UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+      }
+  

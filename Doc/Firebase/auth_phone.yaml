@@ -1,5 +1,11 @@
 The iOs how to use phone authentication?
 
+iOS:
+  1.
+    Open the Phone Sign in method in firebase console
+  2.
+    Add a test phone number and vertify code
+
 offecial docs: https://firebase.google.com/docs/auth/ios/phone-auth
 
 The Android: https://firebase.google.com/docs/auth/android/phone-auth
@@ -8,3 +14,5 @@ The Android: https://firebase.google.com/docs/auth/android/phone-auth
   1. 
     Add this line to the app/build.geadle
     implementation 'com.google.firebase:firebase-auth:19.3.2'
+  
+  2.

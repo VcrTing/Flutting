@@ -5,6 +5,9 @@ import 'package:firebasic/util/constain.dart';
 import 'package:firebasic/model/user.dart';
 import 'package:provider/provider.dart';
 
+import 'package:firebasic/util/notification.dart';
+import 'package:firebasic/page/activity/notification.dart';
+
 class FormView extends StatefulWidget {
   FormView({Key key}) : super(key: key);
 
@@ -129,7 +132,32 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: FormView(),
+      child: Column(
+        children: <Widget>[
+          FormView(),
+          SizedBox(
+            height: 60,
+          ),
+          notifyButton()
+        ],
+      ),
+    );
+  }
+
+  // 提醒
+  Widget notifyButton() {
+    return RaisedButton(
+      child: Text('提醒'),
+      onPressed: () {
+        Notify notify = Notify(
+            context: context,
+            addrPage: NotifyActivity(
+              canshu: '参数',
+            ));
+        notify.initNotify();
+        notify.simpleNotify(
+            0, 'WeelCome', 'You pofile sigin in success!', 'payload');
+      },
     );
   }
 }

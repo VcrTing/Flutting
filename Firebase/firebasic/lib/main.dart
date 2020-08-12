@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import './tabs.dart';
 import 'package:firebasic/model/user.dart';
 import 'package:firebasic/page/auth/auth.dart';
+import 'package:firebasic/util/notification.dart';
+import 'package:firebasic/page/activity/notification.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';

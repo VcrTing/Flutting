@@ -116,6 +116,7 @@ class UserModel {
   Future submitOTP(String smsCode, String verificationId) async {
     AuthCredential phoneCredential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
+    print('submitOTP = ${phoneCredential}');
     return await login(phoneCredential);
   }
 
