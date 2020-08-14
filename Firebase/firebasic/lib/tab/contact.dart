@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:firebasic/util/notification.dart';
 import 'package:firebasic/page/activity/notification.dart';
+import 'package:firebasic/util/toast.dart';
 
 class FormView extends StatefulWidget {
   FormView({Key key}) : super(key: key);
@@ -130,6 +131,7 @@ class Contact extends StatefulWidget {
 class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
+    alert('Wellcome the FireBasic App!!!');
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(

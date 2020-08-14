@@ -1,6 +1,7 @@
 import 'package:firebasic/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import './tab/contact.dart';
 import './tab/shop.dart';
@@ -25,9 +26,6 @@ class _TabBarControllerPageState extends State<TabBarControllerPage>
     //生命周期函数：
     super.dispose();
     _tabController.dispose();
-    print('Tab 即将终结：');
-    print(_tabController.index);
-    print('----------------------- <');
   }
 
   @override
@@ -36,10 +34,30 @@ class _TabBarControllerPageState extends State<TabBarControllerPage>
     super.initState();
     _tabController = new TabController(vsync: this, length: tabCount);
     _tabController.addListener(() {
-      print('Tab 初始化：');
       print(_tabController.index);
-      print('----------------------- >');
     });
+    getMessaging();
+  }
+
+  // FIREBASE MESSAGING
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  Map currentMsg;
+
+  void _register() {
+    print('Register');
+    _firebaseMessaging.getToken().then((token) => print(token));
+  }
+
+  void getMessaging() {
+    _message(Map<String, dynamic> message) async {
+      print('Message = ${message}');
+      setState(() {
+        currentMsg = message;
+      });
+    }
+
+    _firebaseMessaging.configure(
+        onMessage: _message, onLaunch: _message, onResume: _message);
   }
 
   @override
@@ -65,6 +83,19 @@ class _TabBarControllerPageState extends State<TabBarControllerPage>
                 await userApi.signOut();
               },
             ),
+            FlatButton.icon(
+              onPressed: () {
+                _register();
+              },
+              icon: Icon(
+                Icons.restore_page,
+                color: Colors.white,
+              ),
+              label: Text(
+                '注册',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           ],
           /*
           bottom: TabBar(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './tabs.dart';
+import 'tabs.dart';
 import 'package:firebasic/model/user.dart';
 import 'package:firebasic/page/auth/auth.dart';
 import 'package:firebasic/util/notification.dart';
@@ -42,6 +42,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.title);
