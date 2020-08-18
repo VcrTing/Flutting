@@ -35,12 +35,9 @@ iOS:
   2.
     Download GoogleService-Info.plist.
     Put plist file into the ./ios/Runner Folder.
+    Must copy use by xcode!!!
 
   3.
-    Then, cd to the ./ios folder.
-    Do as the console.firebase.google.com's document do!!!
-
-  4.
     refresh flutter project.
 
 Other:
