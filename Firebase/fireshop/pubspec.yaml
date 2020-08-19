@@ -48,6 +48,9 @@ dependencies:
   
   path_provider: ^1.6.11
   path: ^1.6.4
+  http_auth: ^0.3.0
+  shared_preferences: ^0.5.8
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

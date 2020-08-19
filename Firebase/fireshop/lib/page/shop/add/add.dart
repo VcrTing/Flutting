@@ -213,7 +213,6 @@ class _AddPanelState extends State<AddPanel> {
                 alert('Add Product Fail.');
               }
             } catch (e) {
-              print('Shop Init Error = ${e}');
               alert('Add Product Fail.');
             }
           }

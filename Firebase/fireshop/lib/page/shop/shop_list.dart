@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fireshop/model/shop.dart';
 import 'package:provider/provider.dart';
 
+import 'package:fireshop/page/shop/detail/detail.dart';
+
 class ShopList extends StatefulWidget {
   ShopList({Key key}) : super(key: key);
 
@@ -29,10 +31,9 @@ class ShopListItem extends StatefulWidget {
 class _ShopListItemState extends State<ShopListItem> {
   List<Shop> shops = [];
   List<Widget> everyShop(List<Shop> shops) {
-    print('shops = ${shops}');
     return shops.map((Shop shop) {
-      shop.defAdd();
-      print('shops.avatar = ${shop.avatar}');
+      // shop.defAdd();
+
       return Container(
         height: 260,
         margin: EdgeInsets.only(bottom: 15),
@@ -45,15 +46,24 @@ class _ShopListItemState extends State<ShopListItem> {
         ),
         child: Column(
           children: <Widget>[
-            Container(
-              height: 170,
-              color: Colors.cyan,
-              padding: EdgeInsets.only(top: 30),
-              child: Center(
-                child: Image.network(
-                  shop.avatar,
-                  fit: BoxFit.cover,
-                  height: 170,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ShopDetail(productId: shop.id)));
+              },
+              child: Container(
+                height: 170,
+                color: Colors.cyan,
+                padding: EdgeInsets.only(top: 30),
+                child: Center(
+                  child: Image.network(
+                    shop.avatar,
+                    fit: BoxFit.cover,
+                    height: 170,
+                  ),
                 ),
               ),
             ),
@@ -68,7 +78,19 @@ class _ShopListItemState extends State<ShopListItem> {
                   SizedBox(
                     height: 8,
                   ),
-                  shop.selPrice(16)
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        shop.selPrice(16, 1, true),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        shop.selPriceOld(12, 1, false),
+                      ],
+                    ),
+                  )
                 ],
               ),
             )

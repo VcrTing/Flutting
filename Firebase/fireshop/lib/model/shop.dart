@@ -152,7 +152,7 @@ class Shop {
     );
   }
 
-  Widget selPrice(double fs, [int ta = -1]) {
+  Widget selPrice(double fs, [int ta = -1, bool bold = false]) {
     TextAlign align = TextAlign.left;
     if (ta == 0) {
       align = TextAlign.center;
@@ -160,8 +160,30 @@ class Shop {
       align = TextAlign.right;
     }
     return Text(
-      pricePrefix + ' ${price_origin.toString()}',
-      style: TextStyle(color: Colors.orange, fontSize: fs),
+      pricePrefix + '${price_result.toString()}',
+      style: TextStyle(
+          color: Colors.orange,
+          fontSize: fs,
+          fontWeight: bold ? FontWeight.bold : FontWeight.normal),
+      textAlign: align,
+    );
+  }
+
+  Widget selPriceOld(double fs, [int ta = -1, bool bold = false]) {
+    TextAlign align = TextAlign.left;
+    if (ta == 0) {
+      align = TextAlign.center;
+    } else if (ta == 1) {
+      align = TextAlign.right;
+    }
+    return Text(
+      pricePrefix + '${price_origin.toString()}',
+      style: TextStyle(
+          color: Colors.black45,
+          fontStyle: FontStyle.italic,
+          fontSize: fs,
+          decoration: TextDecoration.lineThrough,
+          fontWeight: bold ? FontWeight.bold : FontWeight.normal),
       textAlign: align,
     );
   }
@@ -192,7 +214,21 @@ class ShopModel {
   bool addOne(Shop shop) {
     print('---------- Model Add ----------');
     Map<String, dynamic> shopJson = shop.toJson();
-    print('Add Shop Json = ${shopJson}');
-    return _service.shopAddOne(shopJson);
+    Future<DocumentReference> drf = _service.shopAddOne(shopJson);
+
+    drf.then((value) {
+      print('Value = value');
+      /*
+      value.snapshots().map((DocumentSnapshot doc) {
+        Shop shop = Shop.fromJson(doc.data);
+        print('Shop = ${shop}');
+      });
+      */
+    });
+    return true;
+  }
+
+  Stream<Shop> getOne(String docId) {
+    return _service.getShopById(docId);
   }
 }

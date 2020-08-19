@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 abstract class BaseSerivce {
   Stream<List<Shop>> fetchShopsList();
+  Stream<Shop> getShopById(String docId);
 }
 
 class Services implements BaseSerivce {
@@ -17,17 +18,28 @@ class Services implements BaseSerivce {
     Stream<List<Shop>> shopsStream =
         shopCollection.snapshots().map((QuerySnapshot snapshot) {
       return snapshot.documents.map((doc) {
-        return Shop.fromJson(doc.data);
+        Shop shop = Shop.fromJson(doc.data);
+        shop.id = doc.documentID;
+        return shop;
       }).toList();
     });
 
     return shopsStream;
   }
 
-  bool shopAddOne(Map<String, dynamic> rec) {
-    print('Firebase Add');
-    shopCollection.add(rec);
+  Future<DocumentReference> shopAddOne(Map<String, dynamic> rec) {
+    return shopCollection.add(rec);
+  }
 
-    return true;
+  @override
+  Stream<Shop> getShopById(String docId) {
+    return shopCollection
+        .document(docId)
+        .snapshots()
+        .map((DocumentSnapshot doc) {
+      Shop shop = Shop.fromJson(doc.data);
+      shop.id = doc.documentID;
+      return shop;
+    });
   }
 }
