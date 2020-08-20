@@ -3,23 +3,45 @@ import 'package:provider/provider.dart';
 import 'package:fireshop/model/shop.dart';
 import 'package:fireshop/util/loading.dart';
 
+import 'package:fireshop/pay/buyByPaypal.dart';
+
 class BuyWay extends StatefulWidget {
-  int byCount;
+  int buyCount;
   String productId;
 
-  BuyWay({Key key, this.byCount, this.productId}) : super(key: key);
+  BuyWay({Key key, this.buyCount, this.productId}) : super(key: key);
 
   @override
   _BuyWayState createState() => _BuyWayState();
 }
 
 class _BuyWayState extends State<BuyWay> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<Shop>.value(
+        value: ShopModel().getOne(widget.productId),
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text('Pay Way'),
+            ),
+            body: Container(
+                color: Color.fromRGBO(243, 243, 243, 1),
+                child: BuyWayContent(
+                  buyCount: widget.buyCount,
+                ))));
+  }
+}
+
+class BuyWayContent extends StatefulWidget {
+  int buyCount;
+  BuyWayContent({Key key, this.buyCount}) : super(key: key);
+
+  @override
+  _BuyWayContentState createState() => _BuyWayContentState();
+}
+
+class _BuyWayContentState extends State<BuyWayContent> {
   Shop shop;
-  Map order;
-  String avatar;
-  double allPrice;
-  String name;
-  ShopModel shopApi = ShopModel();
 
   Widget zhiFuBao() {
     return Container(
@@ -30,11 +52,19 @@ class _BuyWayState extends State<BuyWay> {
   }
 
   Widget payPal() {
-    return Container(
-      child: Row(
-        children: [Text('Paypay'), Icon(Icons.arrow_right)],
-      ),
-    );
+    return GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) => BuyByPaypal(),
+            ),
+          );
+        },
+        child: Container(
+          child: Row(
+            children: [Text('Paypay'), Icon(Icons.arrow_right)],
+          ),
+        ));
   }
 
   Widget orderMsg() {
@@ -47,7 +77,7 @@ class _BuyWayState extends State<BuyWay> {
             width: double.infinity,
             height: 170,
             child: Image.network(
-              order['avatar'],
+              shop.avatar,
               fit: BoxFit.cover,
             ),
             margin: EdgeInsets.only(bottom: 5),
@@ -57,7 +87,7 @@ class _BuyWayState extends State<BuyWay> {
             child: Column(
               children: [
                 Text(
-                  '${order['name']}',
+                  '${shop.name}',
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -65,14 +95,14 @@ class _BuyWayState extends State<BuyWay> {
                   height: 5,
                 ),
                 Text(
-                  'Count: ${order['buyCount']}',
+                  'Count: ${widget.buyCount}',
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
-                  'Price: \$ ${order['allPrice']} or ¥ ${(order['allPrice'] * 6.9)}',
+                  'Price: \$ ${(shop.price_result * widget.buyCount)}, or ¥ ${(shop.price_result * widget.buyCount * 6.9)}',
                   textAlign: TextAlign.left,
                 )
               ],
@@ -83,78 +113,52 @@ class _BuyWayState extends State<BuyWay> {
     );
   }
 
-  void setOrder() async {
-    setState(() {
-      order = {
-        'id': widget.productId,
-        'name': shop.name,
-        'allPrice': (shop.price_result * widget.byCount),
-        'avatar': shop.avatar,
-        'count_sale': shop.count_sale,
-        'buyCount': widget.byCount
-      };
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    shopApi.getOne(widget.productId).listen((event) {
-      shop = event;
-    });
-    setOrder();
-    return order == null
+    shop = Provider.of<Shop>(context) ?? null;
+    return shop == null
         ? Loading()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('Pay Way'),
+        : Column(children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: orderMsg(),
             ),
-            body: Container(
-              color: Color.fromRGBO(243, 243, 243, 1),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    child: orderMsg(),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(color: Colors.cyan),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    child: Text(
-                      'Choise Main Payment',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    child: Row(
-                      children: [zhiFuBao()],
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(color: Colors.cyan),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    child: Text(
-                      'Choise China Payment',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                    child: Row(
-                      children: [payPal()],
-                    ),
-                  ),
-                ],
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(color: Colors.cyan),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Text(
+                'Choise Main Payment',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
               ),
             ),
-          );
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Row(
+                children: [zhiFuBao()],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(color: Colors.cyan),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Text(
+                'Choise China Payment',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: Row(
+                children: [payPal()],
+              ),
+            ),
+          ]);
   }
 }

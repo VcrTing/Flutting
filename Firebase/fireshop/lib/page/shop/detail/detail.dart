@@ -113,7 +113,7 @@ class _ShopDetailState extends State<ShopDetail> {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => BuyWay(
-                            byCount: buyCount,
+                            buyCount: buyCount,
                             productId: widget.productId,
                           )));
             },
@@ -121,7 +121,7 @@ class _ShopDetailState extends State<ShopDetail> {
               'Buy it now',
               style: TextStyle(color: Colors.white),
             ),
-          )
+          ),
         ],
       ),
     );
