@@ -2,12 +2,16 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'PaypalServices.dart';
+import '../paypal/PaypalServices.dart';
+
+import 'package:fireshop/model/pay.dart';
+import 'package:fireshop/model/express.dart';
+import './config.dart';
 
 class PaypalPayment extends StatefulWidget {
   final Function onFinish;
-
-  PaypalPayment({this.onFinish});
+  final Pay pay;
+  PaypalPayment({this.onFinish, this.pay});
 
   @override
   State<StatefulWidget> createState() {
@@ -23,18 +27,6 @@ class PaypalPaymentState extends State<PaypalPayment> {
   PaypalServices services = PaypalServices();
 
   // you can change default currency according to your need
-  Map<dynamic, dynamic> defaultCurrency = {
-    "symbol": "USD ",
-    "decimalDigits": 2,
-    "symbolBeforeTheNumber": true,
-    "currency": "USD"
-  };
-
-  bool isEnableShipping = false;
-  bool isEnableAddress = false;
-
-  String returnURL = 'return.example.com';
-  String cancelURL = 'cancel.example.com';
 
   @override
   void initState() {
@@ -43,10 +35,13 @@ class PaypalPaymentState extends State<PaypalPayment> {
     Future.delayed(Duration.zero, () async {
       try {
         accessToken = await services.getAccessToken();
-
+        print('accessToken = ${accessToken}');
         final transactions = getOrderParams();
+        print('transactions = ${transactions}');
         final res =
             await services.createPaypalPayment(transactions, accessToken);
+
+        print('createPaypalPayment = ${res}');
         if (res != null) {
           setState(() {
             checkoutUrl = res["approvalUrl"];
@@ -70,34 +65,20 @@ class PaypalPaymentState extends State<PaypalPayment> {
     });
   }
 
-  // item name, price and quantity
-  String itemName = 'iPhone X';
-  String itemPrice = '1.99';
-  int quantity = 1;
-
   Map<String, dynamic> getOrderParams() {
+    Pay pay = widget.pay;
+    Express express = pay.express;
+    print('Pay MSG = ');
+    print('Pay = ${pay.toJson()}');
+    print('Readlly Pay');
     List items = [
       {
-        "name": itemName,
-        "quantity": quantity,
-        "price": itemPrice,
+        "name": pay.itemName,
+        "quantity": pay.quantity,
+        "price": pay.itemPrice,
         "currency": defaultCurrency["currency"]
       }
     ];
-
-    // checkout invoice details
-    String totalAmount = '1.99';
-    String subTotalAmount = '1.99';
-    String shippingCost = '0';
-    int shippingDiscountCost = 0;
-    String userFirstName = 'Gulshan';
-    String userLastName = 'Yadav';
-    String addressCity = 'Delhi';
-    String addressStreet = 'Mathura Road';
-    String addressZipCode = '110014';
-    String addressCountry = 'India';
-    String addressState = 'Delhi';
-    String addressPhoneNumber = '+919990119091';
 
     Map<String, dynamic> temp = {
       "intent": "sale",
@@ -105,12 +86,13 @@ class PaypalPaymentState extends State<PaypalPayment> {
       "transactions": [
         {
           "amount": {
-            "total": totalAmount,
+            "total": pay.totalAmount,
             "currency": defaultCurrency["currency"],
             "details": {
-              "subtotal": subTotalAmount,
-              "shipping": shippingCost,
-              "shipping_discount": ((-1.0) * shippingDiscountCost).toString()
+              "subtotal": pay.subTotalAmount,
+              "shipping": pay.shippingCost,
+              "shipping_discount":
+                  ((-1.0) * pay.shippingDiscountCost).toString()
             }
           },
           "description": "The payment transaction description.",
@@ -121,14 +103,15 @@ class PaypalPaymentState extends State<PaypalPayment> {
             "items": items,
             if (isEnableShipping && isEnableAddress)
               "shipping_address": {
-                "recipient_name": userFirstName + " " + userLastName,
-                "line1": addressStreet,
+                "recipient_name":
+                    express.userFirstName + " " + express.userLastName,
+                "line1": express.addressStreet,
                 "line2": "",
-                "city": addressCity,
-                "country_code": addressCountry,
-                "postal_code": addressZipCode,
-                "phone": addressPhoneNumber,
-                "state": addressState
+                "city": express.addressCity,
+                "country_code": express.addressCountry,
+                "postal_code": express.addressZipCode,
+                "phone": express.addressPhoneNumber,
+                "state": express.addressState
               },
           }
         }

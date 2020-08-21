@@ -120,7 +120,10 @@ class _ImagerPickerState extends State<ImagerPicker> {
     return Center(
       child: Column(
         children: <Widget>[
-          Text('Selected Image'),
+          Text(
+            'Selected Image',
+            style: TextStyle(color: Color.fromRGBO(164, 164, 164, 1)),
+          ),
           _image != null
               ? Image.asset(
                   _image.path,

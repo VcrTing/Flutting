@@ -9,6 +9,8 @@ import 'package:fireshop/util/notification.dart';
 import 'package:fireshop/page/activity/notification.dart';
 import 'package:fireshop/util/toast.dart';
 
+import 'package:fireshop/page/img/imager.dart';
+
 class FormView extends StatefulWidget {
   FormView({Key key}) : super(key: key);
 
@@ -132,18 +134,28 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     alert('Wellcome the FireBasic App!!!');
-    return Container(
+    return SingleChildScrollView(
+        child: Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: <Widget>[
           FormView(),
+          SizedBox(height: 15),
+          notifyButton(),
           SizedBox(
-            height: 60,
+            height: 35,
           ),
-          notifyButton()
+          Text(
+            'FireStorage',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          ImagerPicker(),
+          SizedBox(
+            height: 15,
+          )
         ],
       ),
-    );
+    ));
   }
 
   // 提醒

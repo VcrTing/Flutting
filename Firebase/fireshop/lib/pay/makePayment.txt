@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'PaypalPayment.dart';
+import 'paypal/PaypalPayment.dart';
 
 class makePayment extends StatefulWidget {
   @override

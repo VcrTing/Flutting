@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fireshop/model/shop.dart';
+import 'package:fireshop/model/user.dart';
+import 'package:fireshop/model/pay.dart';
+import 'package:fireshop/model/express.dart';
 import 'package:fireshop/util/loading.dart';
 
 import 'package:fireshop/pay/buyByPaypal.dart';
@@ -42,6 +46,7 @@ class BuyWayContent extends StatefulWidget {
 
 class _BuyWayContentState extends State<BuyWayContent> {
   Shop shop;
+  Pay pay;
 
   Widget zhiFuBao() {
     return Container(
@@ -56,7 +61,7 @@ class _BuyWayContentState extends State<BuyWayContent> {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context) => BuyByPaypal(),
+              builder: (BuildContext context) => BuyByPaypal(pay: pay),
             ),
           );
         },
@@ -113,52 +118,71 @@ class _BuyWayContentState extends State<BuyWayContent> {
     );
   }
 
+  Widget main(String uid) {
+    int shipping = 0;
+    double totalAmount = (shop.price_result * widget.buyCount) + shipping;
+    Express express = Express();
+    express.basic('', uid, 'Eric', 'Nice', 'HongKong', 'JiuLong', '80008',
+        'China', 'Asia', '+852 92779625');
+    pay = Pay();
+    pay.basic(
+        '',
+        uid,
+        express,
+        totalAmount,
+        totalAmount,
+        double.parse(shipping.toString()),
+        widget.buyCount,
+        shipping,
+        shop.name,
+        shop.price_result,
+        '\$',
+        Timestamp.now());
+
+    return Column(children: [
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        child: orderMsg(),
+      ),
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(color: Colors.cyan),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Text(
+          'Choise Main Payment',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Row(
+          children: [zhiFuBao()],
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        decoration: BoxDecoration(color: Colors.cyan),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Text(
+          'Choise China Payment',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Row(
+          children: [payPal()],
+        ),
+      ),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     shop = Provider.of<Shop>(context) ?? null;
-    return shop == null
-        ? Loading()
-        : Column(children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              child: orderMsg(),
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.cyan),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Text(
-                'Choise Main Payment',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Row(
-                children: [zhiFuBao()],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.cyan),
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Text(
-                'Choise China Payment',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Row(
-                children: [payPal()],
-              ),
-            ),
-          ]);
+    User user = Provider.of<User>(context) ?? null;
+    return shop == null ? Loading() : main(user.uid);
   }
 }

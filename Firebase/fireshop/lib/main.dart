@@ -11,11 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:fireshop/pay/makePayment.dart';
-
 void main() {
   runApp(MyApp());
-  // runApp(makePayment());
 }
 
 class MyApp extends StatelessWidget {

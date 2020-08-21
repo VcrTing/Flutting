@@ -7,22 +7,26 @@ class Buy {
   String id;
   String uid;
   String productId;
+  String avatar;
+  String name;
   Timestamp add_time;
   String orderId;
   int count;
-  double price;
+  double allPrice;
 
   Buy();
 
   void basic(String id, String uid, String productId, Timestamp add_time,
-      String orderId, int count, double price) {
+      String orderId, int count, double allPrice, String avatar, String name) {
     this.id = id;
     this.uid = uid;
     this.productId = productId;
     this.add_time = add_time;
     this.orderId = orderId;
+    this.avatar = avatar;
+    this.name = name;
     this.count = count;
-    this.price = price;
+    this.allPrice = allPrice;
     if (add_time == null) {
       this.add_time = new Timestamp.now();
     }
@@ -35,7 +39,9 @@ class Buy {
     add_time = parsedJson['add_time'];
     orderId = parsedJson['orderId'];
     count = parsedJson['count'];
-    price = parsedJson['price'];
+    allPrice = parsedJson['allPrice'];
+    name = parsedJson['name'];
+    avatar = parsedJson['avatar'];
   }
 
   Map<String, dynamic> toJson() {
@@ -46,7 +52,9 @@ class Buy {
       'add_time': add_time,
       'orderId': orderId,
       'count': count,
-      'price': price
+      'allPrice': allPrice,
+      'name': name,
+      'avatar': avatar
     };
   }
 }
