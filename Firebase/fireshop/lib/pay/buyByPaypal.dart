@@ -23,9 +23,19 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
 
   Widget payMsg() {
     return Container(
-        color: Colors.pink[300],
         margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.fromLTRB(0, 15, 0, 25),
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 25),
+        decoration: BoxDecoration(
+            color: Colors.blueGrey,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 0.0), //阴影xy轴偏移量
+                  blurRadius: 5.0, //阴影模糊程度
+                  spreadRadius: 1.0 //阴影扩散程度
+                  )
+            ]),
         child: Column(children: [
           Container(
             margin: EdgeInsets.only(bottom: 10),
@@ -69,8 +79,8 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
                     children: [
                       Text('  ' + pay.currency + ' ' + pay.itemPrice.toString(),
                           style: TextStyle(
-                              color: Colors.lightBlue,
-                              fontWeight: FontWeight.bold)),
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal)),
                       Text(' *' + pay.quantity.toString(),
                           style: TextStyle(color: Colors.white))
                     ],
@@ -96,8 +106,7 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
                 Expanded(
                   child: Text('  \$ ' + pay.shippingCost.toString(),
                       style: TextStyle(
-                          color: Colors.lightBlue,
-                          fontWeight: FontWeight.bold)),
+                          color: Colors.white, fontWeight: FontWeight.normal)),
                   flex: 4,
                 )
               ],
@@ -109,9 +118,19 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
   Widget addressMsg() {
     Express express = pay.express;
     return Container(
-      color: Colors.pink[300],
+      decoration: BoxDecoration(
+          color: Colors.blueGrey,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0.0, 0.0), //阴影xy轴偏移量
+                blurRadius: 5.0, //阴影模糊程度
+                spreadRadius: 1.0 //阴影扩散程度
+                )
+          ]),
       margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.fromLTRB(0, 15, 0, 25),
+      padding: EdgeInsets.fromLTRB(0, 20, 0, 25),
       child: Column(
         children: [
           Container(
@@ -194,9 +213,11 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Total:  ',
-            style:
-                TextStyle(fontWeight: FontWeight.bold, color: Colors.black12),
+            'Total:   ',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Colors.black54),
           ),
           Text(
             pay.currency +
@@ -224,7 +245,9 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
         text,
         textAlign: TextAlign.left,
         style: TextStyle(
-            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black12),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color.fromRGBO(238, 238, 238, 1)),
       ),
     );
   }
@@ -257,12 +280,12 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
             SizedBox(
               height: 25,
             ),
-            header('Product:'),
+            // header('Product'),
             payMsg(),
             SizedBox(
-              height: 15,
+              height: 5,
             ),
-            header('Address:'),
+            // header('Address'),
             addressMsg(),
             SizedBox(
               height: 45,
@@ -282,6 +305,7 @@ class _BuyByPaypalState extends State<BuyByPaypal> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) => PaypalPayment(
+                      pay: pay,
                       onFinish: (number) async {
                         // payment done
                         print('order id: ' + number);

@@ -17,8 +17,10 @@ String domain = "https://api.sandbox.paypal.com"; // for sandbox mode
 // String domain = "https://api.paypal.com"; // for production mode
 
 // change clientId and secret with your own, provided by paypal
-String clientId = 'x';
-String secret = 'x';
+String clientId =
+    'AQMaKs2G6ZXZk_NAlf9UanpDOd0d6GhZ-ZiAcPFwO4zlq5VtwFYlgiE5Y9EEZwkuZbkMArJ2C6AaPNHn';
+String secret =
+    'EO4f3nJAi2WaRPO41FvWzChggOzuFM7hRRlVBGcWAQrTpa_30RHvVD62cLGqtOwfomuMvhoT7p6E25CN';
 
 /*
 // =>
