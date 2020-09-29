@@ -1,0 +1,11 @@
+GET https://www.baidu.com
+
+### 
+
+POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
+{
+    "name": "VcrTing",
+    "age": 18
+}
