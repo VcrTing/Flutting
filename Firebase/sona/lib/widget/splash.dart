@@ -11,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 120),
+      padding: EdgeInsets.only(top: 120),
       color: Theme.of(context).buttonColor,
       child: Center(
         child: Text(

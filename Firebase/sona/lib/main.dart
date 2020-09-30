@@ -26,9 +26,12 @@ Future<void> main() async {
     );
   }
 
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  Future<FirebaseApp> _initialization() async {
+    return await Firebase.initializeApp();
+  }
+
   runApp(FutureBuilder(
-      future: _initialization,
+      future: _initialization(),
       builder: (context, snapshot) =>
           snapshot.connectionState == ConnectionState.done ? App() : Def()));
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sona/common/style/ui.dart';
 
+import 'loading.dart';
+
 class Def extends StatefulWidget {
   Def({Key key}) : super(key: key);
 
@@ -15,7 +17,10 @@ class _DefState extends State<Def> {
       // theme: ,
       home: Container(
         color: kLightPrimary,
-        child: Text(''),
+        padding: EdgeInsets.only(top: 120),
+        child: Center(
+          child: Loading(),
+        ),
       ),
     );
   }
