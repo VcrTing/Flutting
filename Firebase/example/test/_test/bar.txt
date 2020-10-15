@@ -1,0 +1,67 @@
+
+          // ConvexAppBar.builder( itemBuilder: BarBuilder(), count: 5, curveSize: 0, top: -50)
+
+          ConvexAppBar(
+        // color: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
+        curveSize: 0,
+        // activeColor: Theme.of(context).primaryColorDark,
+        // top: -60,
+        items: [
+          TabItem(icon: Icons.person, title: this.tabTitle[0]),
+          TabItem(icon: Icons.terrain, title: this.tabTitle[1]),
+          TabItem<Widget>(
+              icon: Container(
+                padding: EdgeInsets.all(15),
+                child: Icon(Icons.work),
+              ),
+              title: this.tabTitle[2]),
+          /*
+          TabItem<Widget>(
+              icon: Container(
+                child: Icon(Icons.work),
+              ),
+              title: '操控'),
+            */
+          TabItem(icon: Icons.table_chart, title: this.tabTitle[3]),
+          TabItem(icon: Icons.shopping_cart, title: this.tabTitle[4]),
+        ],
+        // initialActiveIndex: 0,
+        onTap: (int i) => _selectTab(i),
+      ),
+      
+
+       BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Theme.of(context).primaryColorDark,
+          iconSize: 22,
+          elevation: 0,
+          selectedIconTheme: Theme.of(context).iconTheme.copyWith(size: 25),
+          unselectedItemColor: Theme.of(context).backgroundColor,
+          currentIndex: this.defIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text(this.tabTitle[0]),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.backspace),
+              title: Text(this.tabTitle[1]),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text(this.tabTitle[2]),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.date_range),
+              title: Text(this.tabTitle[3]),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              title: Text(this.tabTitle[4]),
+            ),
+          ],
+          onTap: (value) => this._selectTab(value),
+        )
+      

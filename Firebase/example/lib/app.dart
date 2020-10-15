@@ -1,16 +1,13 @@
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import './common/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sona/init.dart';
-import 'package:sona/service/app_model.dart';
-import 'package:sona/service/profile/profile_model.dart';
-import 'package:sona/service/some/gategory/gategory_model.dart';
-import 'package:sona/service/some/some_model.dart';
-import 'package:sona/tab.dart';
 
-import 'common/style.dart';
-import 'common/util.dart';
-import 'widget/dialog.dart';
+import 'init.dart';
+import 'model/appProvider.dart';
+import 'tab.dart';
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -21,18 +18,11 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _app = AppModel();
-  final _profile = ProfileModel();
-  final _some = SomeModel();
-  final _gategory = GategoryModel();
 
   @override
   Widget build(BuildContext context) {
-    print('[App Build] 建立 -----');
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppModel>.value(value: _app),
-      ChangeNotifierProvider<ProfileModel>.value(value: _profile),
-      ChangeNotifierProvider<SomeModel>.value(value: _some),
-      ChangeNotifierProvider<GategoryModel>.value(value: _gategory),
     ], child: _App());
   }
 }
@@ -54,13 +44,12 @@ class _App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [RefreshLocalizations.delegate],
       theme: getTheme(context),
-      home: Scaffold(
-          body: AppInit(
-        onNext: () => MainTab(
-          currentTab: 0,
-        ),
-      )),
+      home: AppInit(
+          onNext: () => MainTab(
+                pageIndex: 1,
+              )),
     );
   }
 }

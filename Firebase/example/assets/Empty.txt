@@ -1,0 +1,77 @@
+
+  Widget namedForm() {
+    return Form(
+        key: _formKey,
+        autovalidate: true,
+        child: Column(
+          children: [
+            grandientInput(
+                TextField(
+                  decoration: inputDecoration(context, '名字 *'),
+                  maxLength: 20,
+                  maxLines: 1,
+                  cursorColor:
+                      Theme.of(context).primaryColorDark.withOpacity(0.2),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 24),
+                  autofocus: true,
+                  obscureText: false,
+                  controller: _firstNameController,
+                  onChanged: (String v) {
+                    String e = v.trim().length < 1 ? null : '';
+                    if (e != null) {
+                      this.firstName = v;
+                    }
+                  },
+                ),
+                ''),
+            grandientInput(
+                TextField(
+                  decoration: inputDecoration(context, '姓 *'),
+                  maxLength: 20,
+                  maxLines: 1,
+                  cursorColor:
+                      Theme.of(context).primaryColorDark.withOpacity(0.2),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 24),
+                  autofocus: true,
+                  obscureText: false,
+                  controller: _lastNameController,
+                  onChanged: (String v) {
+                    String e = v.trim().length < 1 ? null : '';
+                    if (e != null) {
+                      this.lastName = v;
+                    }
+                  },
+                ),
+                '与香港身份证上的相同',
+                true),
+            grandientInput(
+                TextField(
+                  decoration: inputDecoration(context, '显示名称 *'),
+                  maxLength: 20,
+                  maxLines: 1,
+                  cursorColor:
+                      Theme.of(context).primaryColorDark.withOpacity(0.2),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontSize: 24),
+                  autofocus: true,
+                  obscureText: false,
+                  controller: _nickNameController,
+                  onChanged: (String v) {
+                    String e = v.trim().length < 1 ? null : '';
+                    if (e != null) {
+                      this.nickName = v;
+                    }
+                  },
+                ),
+                ''),
+          ],
+        ));
+  }
