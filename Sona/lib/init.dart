@@ -9,7 +9,8 @@ import 'widget/dialog.dart';
 
 class AppInit extends StatefulWidget {
   Function onNext;
-  AppInit({this.onNext});
+  Widget nextWidget;
+  AppInit({this.onNext, this.nextWidget});
 
   @override
   _AppInitState createState() => _AppInitState();
@@ -18,6 +19,7 @@ class AppInit extends StatefulWidget {
 class _AppInitState extends State<AppInit> {
   AppModel _app;
   void _changeInit(res) => _app.changeInit(res);
+
   @override
   void initState() {
     //
@@ -71,6 +73,9 @@ class _AppInitState extends State<AppInit> {
   Widget build(BuildContext context) {
     _app = Provider.of<AppModel>(context);
 
-    return _app.isInit ? widget.onNext() : backgroundRunner();
+    if (widget.nextWidget == null) {
+      return _app.isInit ? widget.onNext() : backgroundRunner();
+    }
+    return widget.nextWidget;
   }
 }

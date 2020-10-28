@@ -80,6 +80,7 @@ dependencies:
   flutter_slidable: ^0.5.7 # 横向滑动操作视图
   animated_text_kit: ^2.2.0 # 字体动画
   convex_bottom_bar: ^2.4.1 # 凸显底部bar 效果
+  gzx_dropdown_menu: ^2.1.0 # 下拉菜单
    
   permission_handler: ^5.0.1+1 # 手机权限状态控制插件
   flutter_screenutil: ^2.3.1

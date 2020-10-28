@@ -9,6 +9,7 @@ class Profile {
   String avatar;
   String background;
   int gender;
+  String loginTime;
 
   Profile();
 
@@ -21,6 +22,14 @@ class Profile {
     gender = int.parse(parsedJson['gender'].toString());
     avatar = parsedJson['avatar'];
     background = parsedJson['background'];
+    loginTime = parsedJson['loginTime'];
+  }
+
+  void def() {
+    this.gender = 0;
+    this.money = '99';
+    this.name = 'VcrTing';
+    this.account = '13576639986';
   }
 
   Map<String, dynamic> toJson() {
@@ -32,7 +41,8 @@ class Profile {
       'money': money,
       'avatar': avatar,
       'gender': gender,
-      'background': background
+      'background': background,
+      'loginTime': loginTime
     };
   }
 }

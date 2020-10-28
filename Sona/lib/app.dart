@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sona/init.dart';
+import 'package:sona/screen/product/product.dart';
+import 'package:sona/screen/shopping/shoppingcart.dart';
 import 'package:sona/service/app_model.dart';
 import 'package:sona/service/profile/profile_model.dart';
 import 'package:sona/service/some/gategory/gategory_model.dart';
@@ -9,8 +11,6 @@ import 'package:sona/service/some/some_model.dart';
 import 'package:sona/tab.dart';
 
 import 'common/style.dart';
-import 'common/util.dart';
-import 'widget/dialog.dart';
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -50,17 +50,22 @@ class _App extends StatelessWidget {
     return buildLightTheme('en');
   }
 
+  Scaffold theHome() => Scaffold(
+          body: AppInit(
+        onNext: () => MainTab(
+          currentTab: 0,
+        ),
+        nextWidget: null,
+      ));
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getTheme(context),
-      home: Scaffold(
-          body: AppInit(
-        onNext: () => MainTab(
-          currentTab: 0,
-        ),
-      )),
+      routes: {
+        '/': (context) => theHome(),
+      },
     );
   }
 }
