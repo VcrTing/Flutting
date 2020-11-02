@@ -5,6 +5,8 @@ import 'package:sona/model/some/some.dart';
 /* 产品 */
 Future<List<Some>> loadSome() async => _someList();
 
+Some oneSome(int index) => _someList()[index];
+
 List<Some> _someList() => [
       Some.fromJson({
         'id': 'Axxiu09909L',
@@ -42,13 +44,15 @@ List<Some> _someList() => [
 Future<List<Map>> loadCart() async => _cartList();
 
 List<Map> _cartList() => [
+      /*
       {'status': true, 'numed': 1, 'product': _someList()[0]},
       {'status': true, 'numed': 3, 'product': _someList()[1]},
       {'status': false, 'numed': 1, 'product': _someList()[2]},
+  */
     ];
 
 /* 用户 */
-Future<Profile> loadProf() async => Profile.fromJson({
+Profile _profile() => Profile.fromJson({
       'id': 'vvKK009',
       'account': '+86 13576639986',
       'name': 'Qiong',
@@ -59,3 +63,17 @@ Future<Profile> loadProf() async => Profile.fromJson({
       'background': '',
       'loginTime': new DateTime.now().toString()
     });
+
+Future<Profile> loadProf() async => _profile();
+
+/* 喜欢列表 */
+Future<List> loadWishlist() async => [
+      {'prof': _profile(), 'product': _someList()[0]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+      {'prof': _profile(), 'product': _someList()[1]},
+    ];

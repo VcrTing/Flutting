@@ -20,30 +20,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   AnimationController _animateController;
 
-  Widget items() => Container(
-          // padding: EdgeInsets.symmetric(horizontal: horizon),
-          child: FadeInUp(
-        manualTrigger: true,
-        duration: Duration(milliseconds: animateL),
-        controller: (controller) => _animateController = controller,
-        child: HomeItemWidget(),
-      ));
+  Widget fadeInUp(int timed, Widget child) => FadeInUp(
+      manualTrigger: true,
+      duration: Duration(milliseconds: timed),
+      controller: (controller) => _animateController = controller,
+      child: child);
+
+  Widget items() => fadeInUp(animateL, HomeItemWidget());
 
   Widget swiper() => Container(
       height: 200,
       padding: EdgeInsets.symmetric(horizontal: horizon),
-      child: FadeInUp(
-          manualTrigger: true,
-          duration: Duration(milliseconds: animateL),
-          controller: (controller) => _animateController = controller,
-          child: ClipRRect(
+      child: fadeInUp(
+          animateL,
+          ClipRRect(
             borderRadius: BorderRadius.circular(distance),
             child: HomeSwiperWidget(),
           )));
 
-  Widget hot() => Container(
-        child: HomeHotWidget(),
-      );
+  Widget hot() => HomeHotWidget();
 
   @override
   Widget build(BuildContext context) {

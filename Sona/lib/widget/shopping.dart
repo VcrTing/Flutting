@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sona/common/style/distance.dart';
+import 'package:sona/tab.dart';
 
 class ShoppingCartButtonWidget extends StatelessWidget {
   const ShoppingCartButtonWidget({
@@ -18,7 +21,9 @@ class ShoppingCartButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).pushNamed('/Cart');
+        Get.to(MainTab(
+          currentTab: 1,
+        ));
       },
       child: Stack(
         alignment: AlignmentDirectional.topEnd,
@@ -53,3 +58,50 @@ class ShoppingCartButtonWidget extends StatelessWidget {
     );
   }
 }
+
+Widget cartNumedOption(BuildContext context) => AspectRatio(
+    aspectRatio: 16 / 4,
+    child: Container(
+      alignment: Alignment.bottomRight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          InkWell(
+            onTap: () {
+              print('ADD');
+            },
+            child: Container(
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).buttonTheme.colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(horizon)),
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: iconS,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: horizon / 2),
+            child: Text('2'),
+          ),
+          InkWell(
+            onTap: () {
+              print('Remove');
+            },
+            child: Container(
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).buttonTheme.colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(horizon)),
+              child: Icon(
+                Icons.remove,
+                color: Colors.white,
+                size: iconS,
+              ),
+            ),
+          )
+        ],
+      ),
+    ));

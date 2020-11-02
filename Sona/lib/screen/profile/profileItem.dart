@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sona/common/style/distance.dart';
+import 'package:sona/screen/auth/login.dart';
 import 'package:sona/screen/profile/item/dark.dart';
 import 'package:sona/screen/profile/item/language.dart';
 import 'package:sona/screen/profile/item/logout.dart';
+import 'package:sona/screen/wishlist/wishlist.dart';
 import 'package:sona/widget/title.dart';
 
 import 'item/wishlist.dart';
@@ -15,45 +18,44 @@ class ProfileItemWidget extends StatefulWidget {
 }
 
 class _ProfileItemWidgetState extends State<ProfileItemWidget> {
-  Widget profWishlist() => Padding(
-        child: ItemWishlistWidget(),
-        padding: EdgeInsets.only(bottom: horizon),
+  Widget profWishlist() => InkWell(
+        onTap: () {
+          Get.to(WishListScreen());
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: horizon),
+          child: ItemWishlistWidget(),
+        ),
       );
-  Widget profLanguage() => Padding(
+  Widget profLanguage() => Container(
+        margin: EdgeInsets.only(top: horizon),
         child: ItemLanguageWidget(),
-        padding: EdgeInsets.only(bottom: horizon),
       );
-  Widget profDark() => Padding(
+  Widget profDark() => Container(
+        margin: EdgeInsets.only(top: horizon),
         child: ItemDarkWidget(),
-        padding: EdgeInsets.only(bottom: horizon),
       );
-  Widget profLogout() => Padding(
-        child: ItemLogoutWidget(),
-        padding: EdgeInsets.only(bottom: horizon),
+
+  Widget profLogout() => InkWell(
+        onTap: () {
+          Get.to(LoginScreen());
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: horizon),
+          child: ItemLogoutWidget(),
+        ),
       );
 
   Widget itemEvery() => Container(
-        padding: EdgeInsets.fromLTRB(
-            horizonT + distance, horizon + distance, horizon, 0),
+        padding: EdgeInsets.fromLTRB(horizonT + distance, 0, horizon, 0),
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [profWishlist(), profLanguage(), profDark(), profLogout()],
         ),
       );
 
-  Widget itemTitle() => Container(
-        width: MediaQuery.of(context).size.width,
-        alignment: Alignment.centerLeft,
-        child: singleTitle(
-          context,
-          'General Setting',
-        ),
-      );
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [itemTitle(), itemEvery()],
-    );
+    return itemEvery();
   }
 }

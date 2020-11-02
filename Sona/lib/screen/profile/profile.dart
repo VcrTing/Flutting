@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sona/common/style/distance.dart';
 import 'package:sona/screen/profile/profileItem.dart';
 import 'package:sona/screen/profile/profileMsg.dart';
+import 'package:sona/widget/title.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -27,7 +28,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
 
   Widget profItem() => Container(
-        child: ProfileItemWidget(),
+      height: 400,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProfileItemWidget(),
+            SizedBox(
+              height: 150 + distance,
+            )
+          ],
+        ),
+      ));
+
+  Widget itemTitle() => Container(
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.centerLeft,
+        child: singleTitle(
+          context,
+          'General Setting',
+        ),
       );
 
   @override
@@ -39,7 +58,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Positioned(
             top: 0,
             child: Column(
-              children: [profMsg(), profItem()],
+              children: [
+                profMsg(),
+                SizedBox(
+                  height: distance,
+                ),
+                itemTitle(),
+                SizedBox(
+                  height: horizon,
+                ),
+                profItem()
+              ],
             ),
           ),
           Positioned(

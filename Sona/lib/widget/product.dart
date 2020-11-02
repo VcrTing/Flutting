@@ -7,6 +7,7 @@ import 'package:sona/widget/title.dart';
 
 import 'imager.dart';
 
+// 竖向产品列表
 class ProductWidget extends StatelessWidget {
   ProductWidget({this.some, this.sub, Key key}) : super(key: key);
 
@@ -83,4 +84,61 @@ Widget productWithSale(Some some, [Key key]) => ProductWidget(
       some: some,
       sub: 1,
       key: key,
+    );
+
+// 横向产品列表
+class ProductVerticalWidget extends StatelessWidget {
+  ProductVerticalWidget({this.some, Key key}) : super(key: key);
+
+  Some some;
+
+  Widget productImg(BuildContext context) => AspectRatio(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(distance),
+          child: imager(context, some.avatar == null ? '' : some.avatar),
+        ),
+        aspectRatio: 4 / 3,
+      );
+
+  Widget productTxt(BuildContext context) => Column(
+        children: [
+          Container(
+            width: double.infinity,
+            child: Text(some.txt),
+          ),
+          SizedBox(
+            height: horizonT / 2,
+          ),
+          Container(
+            width: double.infinity,
+            child: customTitle(context, timestampFmt(some.add_time),
+                Theme.of(context).accentColor, textS),
+          )
+        ],
+      );
+
+  Widget productMsg(BuildContext context) => AspectRatio(
+      aspectRatio: 16 / 5,
+      child: Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: horizon + distance, vertical: horizon),
+          alignment: Alignment.centerLeft,
+          child: productTxt(context)));
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Expanded(flex: 3, child: productImg(context)),
+          Expanded(flex: 7, child: productMsg(context))
+        ],
+      ),
+    );
+  }
+}
+
+Widget productVertical(Some some, [Key key]) => ProductVerticalWidget(
+      key: key,
+      some: some,
     );

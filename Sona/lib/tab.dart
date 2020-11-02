@@ -67,6 +67,7 @@ class _MainTabState extends State<MainTab> {
 
   @override
   Widget build(BuildContext context) {
+    print('Main Tab 重建 --------------- ');
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         key: _scaffoldKey,
@@ -80,7 +81,7 @@ class _MainTabState extends State<MainTab> {
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.5),
-        selectedItemColor: Theme.of(context).buttonColor,
+        selectedItemColor: kTeal100,
         // selectedFontSize: 0.0,
         // unselectedFontSize: 0.0,
         iconSize: iconM,

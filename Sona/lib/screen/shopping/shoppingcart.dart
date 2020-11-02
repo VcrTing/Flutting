@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sona/common/style/distance.dart';
+import 'package:sona/common/style/ui.dart';
+import 'package:sona/screen/shopping/cartEvery.dart';
 import 'package:sona/service/data.dart';
-import 'package:sona/widget/bar.dart';
-import 'package:sona/widget/title.dart';
+import 'package:sona/widget/space.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
   ShoppingCartScreen({Key key}) : super(key: key);
@@ -12,47 +15,48 @@ class ShoppingCartScreen extends StatefulWidget {
 }
 
 class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
-  GlobalKey cartKey = GlobalKey();
+  GlobalKey<_CartNumedWidgetState> numedKey = GlobalKey();
   double bottomH = 90;
   List cartList = [];
   int cartNumed = 0;
 
-  Widget cartDef() => Container(
-        width: MediaQuery.of(context).size.width,
-        alignment: Alignment.topCenter,
-        padding:
-            EdgeInsets.symmetric(horizontal: horizon, vertical: horizon * 6),
-        child: Text(
-          'There is nothing here.',
-          style: TextStyle(fontSize: textL),
-        ),
-      );
+  Widget productCartEvery(Map cart) => ShoppingCartEveryWidget(cart: cart);
 
   Widget productCart() => FutureBuilder(
         future: loadCart(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            this.cartNumed = 0;
+
+            List res = snapshot.data.length < 1
+                ? [nothingPanel(context)]
+                : snapshot.data.map((e) {
+                    this.cartNumed += 1;
+                    return productCartEvery(e);
+                  }).toList();
+
             return Column(children: [
-              ...snapshot.data.map((e) {
-                this.cartNumed += 1;
-                return Container(child: Text('AAA'));
-              }).toList()
+              ...res,
+              SizedBox(
+                height: 300,
+              )
             ]);
           }
-          return cartDef();
+          return nothingPanel(context);
         },
       );
 
   Widget content() => Container(
         width: double.infinity,
-        color: Theme.of(context).scaffoldBackgroundColor,
+        // color: Theme.of(context).scaffoldBackgroundColor,
         height: MediaQuery.of(context).size.height - bottomH - 175,
-        child: productCart(),
+        child: SingleChildScrollView(
+          child: productCart(),
+        ),
       );
 
   Widget buttomBar() => Container(
         height: bottomH,
-        // color: Theme.of(context).scaffoldBackgroundColor,
         padding:
             EdgeInsets.symmetric(horizontal: horizon, vertical: horizon / 2),
         child: Row(
@@ -84,7 +88,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
               flex: 3,
               child: Container(
                 child: RaisedButton(
-                  color: Theme.of(context).buttonColor,
+                  color: kTeal100,
                   onPressed: () {},
                   child: Text(
                     'CHECKOUT',
@@ -99,6 +103,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('购物车 重建');
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -108,8 +113,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
   }
 
   Widget topBar() => Container(
-      color: Theme.of(context).buttonColor,
-      // padding: EdgeInsets.only(bottom: distance),
+      color: kTeal100,
       child: SafeArea(
         child: Row(
           children: [
@@ -137,12 +141,12 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             Expanded(
                 flex: 3,
                 child: CartNumedWidget(
-                  cartNumed: cartNumed,
-                  key: cartKey,
+                  key: numedKey,
                 ))
           ],
         ),
       ));
+
   Widget cartOption() => PopupMenuButton(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         itemBuilder: (context) => [
@@ -169,7 +173,6 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           padding: EdgeInsets.only(top: distance),
           child: Icon(
             Icons.keyboard_arrow_down,
-            // size: iconS,
             color: Colors.white,
           ),
         ),
@@ -177,25 +180,32 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
 }
 
 class CartNumedWidget extends StatefulWidget {
-  int cartNumed;
-  CartNumedWidget({this.cartNumed, Key key}) : super(key: key);
+  CartNumedWidget({Key key}) : super(key: key);
 
   @override
   _CartNumedWidgetState createState() => _CartNumedWidgetState();
 }
 
 class _CartNumedWidgetState extends State<CartNumedWidget> {
+  int cartNumed = 0;
+
+  void refreshNumed(int v) {
+    setState(() {
+      this.cartNumed = v;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomRight,
       padding: EdgeInsets.symmetric(horizontal: horizon),
       child: Text(
-        '${widget.cartNumed} items',
+        '${this.cartNumed} ITEMS',
         style: Theme.of(context)
             .accentTextTheme
             .bodyText1
-            .copyWith(color: Colors.white),
+            .copyWith(color: kGrey200),
       ),
     );
   }

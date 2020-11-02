@@ -1,19 +1,14 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobx/mobx.dart';
 import 'package:sona/common/style/distance.dart';
-import 'package:sona/common/util/time.dart';
+import 'package:sona/common/style/ui.dart';
 import 'package:sona/model/some/some.dart';
+import 'package:sona/screen/product/detail/productDetail.dart';
 import 'package:sona/service/data.dart';
 import 'package:sona/widget/bar.dart';
-import 'package:sona/widget/imager.dart';
 import 'package:sona/widget/product.dart';
 import 'package:sona/widget/space.dart';
 import 'package:sona/widget/title.dart';
-
-import '../../tab.dart';
 
 class ProductScreen extends StatefulWidget {
   ProductScreen({Key key}) : super(key: key);
@@ -28,6 +23,7 @@ class _ProductScreenState extends State<ProductScreen>
   AnimationController _animationIcon;
 
   bool sortDef = true;
+  int productCount = 0;
 
   @override
   void initState() {
@@ -61,23 +57,27 @@ class _ProductScreenState extends State<ProductScreen>
 
   Widget productEvery(Some some) => productWithSale(some);
 
+  Widget wrapperPanel(snapshot) => Wrap(
+        spacing: 0,
+        runSpacing: 0,
+        children: [
+          ...snapshot.data.map((Some some) {
+            return InkWell(
+                child: productEvery(some),
+                onTap: () {
+                  Get.to(ProductDetailScreen(
+                    some: some,
+                  ));
+                });
+          }).toList()
+        ],
+      );
+
   Widget productPanel() => FutureBuilder(
         future: loadSome(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Wrap(
-              spacing: 0,
-              runSpacing: 0,
-              children: [
-                ...snapshot.data.map((Some some) {
-                  return InkWell(
-                      child: productEvery(some),
-                      onTap: () {
-                        print('打开沙发页面');
-                      });
-                }).toList()
-              ],
-            );
+            return wrapperPanel(snapshot);
           }
           return defContent();
         },
@@ -98,7 +98,7 @@ class _ProductScreenState extends State<ProductScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: null,
-        backgroundColor: Theme.of(context).buttonColor,
+        backgroundColor: kTeal100, // Theme.of(context).buttonColor,
         body: Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -108,7 +108,7 @@ class _ProductScreenState extends State<ProductScreen>
 
   Widget appBar() => Container(
         width: double.infinity,
-        color: Theme.of(context).buttonColor,
+        color: kTeal100, // Theme.of(context).buttonColor,
         height: topBarH,
         alignment: Alignment.centerLeft,
         child: SafeArea(
@@ -128,15 +128,7 @@ class _ProductScreenState extends State<ProductScreen>
                       Container(
                           padding: EdgeInsets.only(bottom: distance),
                           alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            child: Icon(
-                              Icons.filter_list,
-                              color: Colors.white,
-                            ),
-                            onTap: () {
-                              print('过滤');
-                            },
-                          )),
+                          child: filterMenu()),
                       sortMenu()
                     ],
                   ),
@@ -154,7 +146,17 @@ class _ProductScreenState extends State<ProductScreen>
         // size: iconS,
         color: Colors.white,
       ),
-      justTitle(context, 'Product', Colors.white));
+      customTitle(context, 'Product', Colors.white, textM));
+
+  Widget filterMenu() => InkWell(
+        child: Icon(
+          Icons.filter_list,
+          color: Colors.white,
+        ),
+        onTap: () {
+          print('过滤');
+        },
+      );
 
   Widget sortMenu() => PopupMenuButton(
         itemBuilder: (context) => [
@@ -164,7 +166,7 @@ class _ProductScreenState extends State<ProductScreen>
                 'Positive Sequence',
                 style: TextStyle(
                     color: this.sortDef
-                        ? Theme.of(context).buttonColor
+                        ? kTeal100 //Theme.of(context).buttonColor
                         : Theme.of(context).textTheme.bodyText1.color),
               ),
             ),
@@ -176,7 +178,8 @@ class _ProductScreenState extends State<ProductScreen>
                     style: TextStyle(
                         color: this.sortDef
                             ? Theme.of(context).textTheme.bodyText1.color
-                            : Theme.of(context).buttonColor))),
+                            : kTeal100 //Theme.of(context).buttonColor
+                        ))),
             value: false,
           )
         ],

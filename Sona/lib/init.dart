@@ -51,7 +51,7 @@ class _AppInitState extends State<AppInit> {
     try {
       // 拉取本地信息
       // 拉取用户登录信息
-      return Future.delayed(Duration(seconds: 3)).then((value) {
+      return Future.delayed(Duration(seconds: 5)).then((value) {
         _changeInit(true);
         return true;
       });

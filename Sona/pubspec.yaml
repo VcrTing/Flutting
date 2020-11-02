@@ -44,7 +44,7 @@ dependencies:
   share: ^0.6.5
   get_it: ^5.0.1 # 数据的依赖注入
   rxdart: ^0.24.1 # 观察者模式数据处理
-  lottie: ^0.6.0
+  lottie: ^0.6.0 # 0.7.0+1
   shimmer: ^1.1.1 # 白叶占位层
   location: ^3.0.2
   
@@ -119,6 +119,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/product/
+    - assets/pageFx/
     - assets/imgs/
     - assets/
   #   - images/a_dot_burr.jpeg

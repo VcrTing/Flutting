@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sona/common/style/distance.dart';
+import 'package:sona/common/style/ui.dart';
 import 'package:sona/widget/space.dart';
 
 class ItemDarkWidget extends StatefulWidget {
@@ -14,7 +15,7 @@ class _ItemDarkWidgetState extends State<ItemDarkWidget> {
   bool dark = false;
 
   Widget darkSwitch() => Switch(
-        activeColor: Theme.of(context).buttonColor,
+        activeColor: kTeal100, // Theme.of(context).buttonColor,
         value: this.dark,
         onChanged: (v) {
           setState(() {

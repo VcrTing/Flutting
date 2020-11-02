@@ -18,9 +18,16 @@ class ProfileMsgWidget extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
+              alignment: Alignment.center,
               width: MediaQuery.of(_context).size.width,
               margin: EdgeInsets.symmetric(vertical: horizon),
-              child: centerTitle(_context, 'Setting'),
+              child: Text(
+                'Setting',
+                style: Theme.of(_context)
+                    .textTheme
+                    .bodyText1
+                    .copyWith(fontSize: textL, fontWeight: FontWeight.bold),
+              ),
             ),
           )
         ],

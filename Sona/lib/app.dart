@@ -60,6 +60,7 @@ class _App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('App 重建 =========== ');
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getTheme(context),

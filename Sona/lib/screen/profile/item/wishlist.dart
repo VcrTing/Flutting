@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sona/common/style/distance.dart';
+import 'package:sona/common/style/ui.dart';
 import 'package:sona/widget/space.dart';
 
 class ItemWishlistWidget extends StatelessWidget {
@@ -46,8 +47,7 @@ class ItemWishlistWidget extends StatelessWidget {
                               Container(
                                 child: Text(
                                   '5items',
-                                  style: TextStyle(
-                                      color: Theme.of(context).buttonColor),
+                                  style: TextStyle(color: kTeal100),
                                 ),
                               ),
                               Icon(Icons.keyboard_arrow_right)
